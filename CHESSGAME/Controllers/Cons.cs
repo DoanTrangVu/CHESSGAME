@@ -13,6 +13,5 @@ namespace CHESSGAME.Controllers
         public static int CHESS_HEIGHT = 45;
         public static int CHESS_BOARD_WIDTH = 8;
         public static int CHESS_BOARD_HEIGHT = 8;
-        public static Button BtnChosen;
     }
 }
