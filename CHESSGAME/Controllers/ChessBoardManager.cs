@@ -68,7 +68,7 @@ namespace CHESSGAME.Controllers
                     //square.Button.Text = square.Location.Row.ToString() + square.Location.Col;
 
                     // Logic Render Pieces
-                    if (square.Location.Row == 8 && square.Location.Col == Chars.A && square.Location.Col == Chars.H)
+                    if (square.Location.Row == 8 && (square.Location.Col == Chars.A || square.Location.Col == Chars.H))
                     {
                         square.Piece = new Castle()
                         {
