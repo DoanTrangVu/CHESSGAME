@@ -59,15 +59,15 @@ namespace CHESSGAME.Controllers
                     btn.Click += btn_Click;
                     btn.FlatStyle = FlatStyle.Flat;
                     btn.FlatAppearance.BorderSize = 0;
-                    var square = new Square() 
-                    { 
-                        Button = btn, 
+                    var square = new Square()
+                    {
+                        Button = btn,
+                        FlagPiece = 0,
                         Location = new Location() { Row = number, Col = (Chars)j } 
                     };
                     pieces.Add(square);
                     //square.Button.Text = square.Location.Row.ToString() + square.Location.Col;
 
-                    // Logic Render Pieces
                     if (square.Location.Row == 8 && (square.Location.Col == Chars.A || square.Location.Col == Chars.H))
                     {
                         square.Piece = new Castle()
@@ -76,35 +76,166 @@ namespace CHESSGAME.Controllers
                             Square = square
                         };
                         var image = square.Piece.GetImage();
-                        //square.Button.BackgroundImage = Image.FromFile(Application.StartupPath + image);
+                        Bitmap img = (Bitmap)Properties.Resources.ResourceManager.GetObject(image);
+                        square.Button.BackgroundImage = img;
                         square.Button.BackgroundImageLayout = ImageLayout.Stretch;
-                        square.Button.Text = square.Piece.Name + square.Piece.Side;
+                        square.FlagPiece = 2;
+                        //square.Button.Text = square.Piece.Name + square.Piece.Side;
+                    }
+                    if (square.Location.Row == 8 && (square.Location.Col == Chars.B || square.Location.Col == Chars.G))
+                    {
+                        square.FlagPiece = 2;
+                        square.Piece = new Knigh()
+                        {
+                            Side = Side.Black,
+                            Square = square
+                        };
+                        var image = square.Piece.GetImage();
+                        Bitmap img = (Bitmap)Properties.Resources.ResourceManager.GetObject(image);
+                        square.Button.BackgroundImage = img;
+                        square.Button.BackgroundImageLayout = ImageLayout.Stretch;
+                        //square.Button.Text = square.Piece.Name + square.Piece.Side;
+                    }
+                    if (square.Location.Row == 8 && (square.Location.Col == Chars.C || square.Location.Col == Chars.F))
+                    {
+                        square.FlagPiece = 2;
+                        square.Piece = new Bishop()
+                        {
+                            Side = Side.Black,
+                            Square = square
+                        };
+                        var image = square.Piece.GetImage();
+                        Bitmap img = (Bitmap)Properties.Resources.ResourceManager.GetObject(image);
+                        square.Button.BackgroundImage = img;
+                        square.Button.BackgroundImageLayout = ImageLayout.Stretch;
+                        //square.Button.Text = square.Piece.Name + square.Piece.Side;
+                    }
+                    if (square.Location.Row == 8 && square.Location.Col == Chars.D)
+                    {
+                        square.FlagPiece = 2;
+                        square.Piece = new Queen()
+                        {
+                            Side = Side.Black,
+                            Square = square
+                        };
+                        var image = square.Piece.GetImage();
+                        Bitmap img = (Bitmap)Properties.Resources.ResourceManager.GetObject(image);
+                        square.Button.BackgroundImage = img;
+                        square.Button.BackgroundImageLayout = ImageLayout.Stretch;
+                        //square.Button.Text = square.Piece.Name + square.Piece.Side;
+                    }
+                    if (square.Location.Row == 8 && square.Location.Col == Chars.E)
+                    {
+                        square.FlagPiece = 2;
+                        square.Piece = new King()
+                        {
+                            Side = Side.Black,
+                            Square = square
+                        };
+                        var image = square.Piece.GetImage();
+                        Bitmap img = (Bitmap)Properties.Resources.ResourceManager.GetObject(image);
+                        square.Button.BackgroundImage = img;
+                        square.Button.BackgroundImageLayout = ImageLayout.Stretch;
+                        //square.Button.Text = square.Piece.Name + square.Piece.Side;
                     }
                     if (square.Location.Row == 7)
                     {
+                        square.FlagPiece = 2;
                         square.Piece = new Pawn()
                         {
                             Side = Side.Black,
                             Square = square
                         };
                         var image = square.Piece.GetImage();
-                        //square.Button.BackgroundImage = Image.FromFile(Application.StartupPath + image);
+                        Bitmap img = (Bitmap)Properties.Resources.ResourceManager.GetObject(image);
+                        square.Button.BackgroundImage = img;
                         square.Button.BackgroundImageLayout = ImageLayout.Stretch;
-                        square.Button.Text = square.Piece.Name + square.Piece.Side;
+                        //square.Button.Text = square.Piece.Name + square.Piece.Side;
                     }
-
-                    if (square.Location.Row == 2)
+                    if (square.Location.Row == 1 && (square.Location.Col == Chars.A || square.Location.Col == Chars.H))
                     {
-                        square.Piece = new Pawn() 
-                        { 
-                            Side = Side.White,
+                        square.FlagPiece = 1;
+                        square.Piece = new Castle()
+                        {
+                            Side = Side.Pink,
                             Square = square
                         };
                         var image = square.Piece.GetImage();
+                        Bitmap img = (Bitmap)Properties.Resources.ResourceManager.GetObject(image);
+                        square.Button.BackgroundImage = img;
                         square.Button.BackgroundImageLayout = ImageLayout.Stretch;
-                        square.Button.Text = square.Piece.Name + square.Piece.Side;
+                        //square.Button.Text = square.Piece.Name + square.Piece.Side;
                     }
-
+                    if (square.Location.Row == 1 && (square.Location.Col == Chars.B || square.Location.Col == Chars.G))
+                    {
+                        square.FlagPiece = 1;
+                        square.Piece = new Knigh()
+                        {
+                            Side = Side.Pink,
+                            Square = square
+                        };
+                        var image = square.Piece.GetImage();
+                        Bitmap img = (Bitmap)Properties.Resources.ResourceManager.GetObject(image);
+                        square.Button.BackgroundImage = img;
+                        square.Button.BackgroundImageLayout = ImageLayout.Stretch;
+                        //square.Button.Text = square.Piece.Name + square.Piece.Side;
+                    }
+                    if (square.Location.Row == 1 && (square.Location.Col == Chars.C || square.Location.Col == Chars.F))
+                    {
+                        square.FlagPiece = 1;
+                        square.Piece = new Bishop()
+                        {
+                            Side = Side.Pink,
+                            Square = square
+                        };
+                        var image = square.Piece.GetImage();
+                        Bitmap img = (Bitmap)Properties.Resources.ResourceManager.GetObject(image);
+                        square.Button.BackgroundImage = img;
+                        square.Button.BackgroundImageLayout = ImageLayout.Stretch;
+                        //square.Button.Text = square.Piece.Name + square.Piece.Side;
+                    }
+                    if (square.Location.Row == 1 && square.Location.Col == Chars.D)
+                    {
+                        square.FlagPiece = 1;
+                        square.Piece = new King()
+                        {
+                            Side = Side.Pink,
+                            Square = square
+                        };
+                        var image = square.Piece.GetImage();
+                        Bitmap img = (Bitmap)Properties.Resources.ResourceManager.GetObject(image);
+                        square.Button.BackgroundImage = img;
+                        square.Button.BackgroundImageLayout = ImageLayout.Stretch;
+                        //square.Button.Text = square.Piece.Name + square.Piece.Side;
+                    }
+                    if (square.Location.Row == 1 && square.Location.Col == Chars.E)
+                    {
+                        square.FlagPiece = 1;
+                        square.Piece = new Queen()
+                        {
+                            Side = Side.Pink,
+                            Square = square
+                        };
+                        var image = square.Piece.GetImage();
+                        Bitmap img = (Bitmap)Properties.Resources.ResourceManager.GetObject(image);
+                        square.Button.BackgroundImage = img;
+                        square.Button.BackgroundImageLayout = ImageLayout.Stretch;
+                        //square.Button.Text = square.Piece.Name + square.Piece.Side;
+                    }
+                    if (square.Location.Row == 2)
+                    {
+                        square.FlagPiece = 1;
+                        square.Piece = new Pawn() 
+                        { 
+                            Side = Side.Pink,
+                            Square = square
+                        };
+                        var image = square.Piece.GetImage();
+                        Bitmap img = (Bitmap)Properties.Resources.ResourceManager.GetObject(image);
+                        square.Button.BackgroundImage = img;
+                        square.Button.BackgroundImageLayout = ImageLayout.Stretch;
+                        //square.Button.Text = square.Piece.Name + square.Piece.Side;
+                    }
                     // Add Button
                     ChessBoard.Controls.Add(btn);
                     oldButton = btn;
@@ -121,8 +252,10 @@ namespace CHESSGAME.Controllers
         void btn_Click(object sender, EventArgs e)
         {
             Button btn = sender as Button;
-            btn.BackgroundImage = Image.FromFile(Application.StartupPath + "\\Resources\\B_Bishop.png");
+            btn.FlatStyle = FlatStyle.Flat;
+            btn.FlatAppearance.BorderSize = 1;
             btn.FlatAppearance.BorderColor = Color.Red;
+            //var locations = piece.GetLegalLocations(square);
         }
         #endregion
     }

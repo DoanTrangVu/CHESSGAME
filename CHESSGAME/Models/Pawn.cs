@@ -10,9 +10,10 @@ namespace CHESSGAME.Models
     {
         public Pawn()
         {
+            GetImage();
             this.Name = "Pawn";
-            this.BlackImage = "D:\\Code\\CHESSGAME\\CHESSGAME\\Resources\\B_Pawn.png";
-            this.BlackImage = "D:\\Code\\CHESSGAME\\CHESSGAME\\Resources\\P_Pawn.png";
+            this.BlackImage = "B_Pawn";
+            this.PinkImage = "P_Pawn";
         }
 
         public override List<Location> GetLegalLocations(Square square)
@@ -20,7 +21,7 @@ namespace CHESSGAME.Models
             var list = new List<Location>();
             if (this.Side == Side.Black)
                 list.Add(new Location() { Row = square.Location.Row - 1, Col = square.Location.Col });
-            if (this.Side == Side.White)
+            if (this.Side == Side.Pink)
                 list.Add(new Location() { Row = square.Location.Row + 1, Col = square.Location.Col });
             return list;
         }

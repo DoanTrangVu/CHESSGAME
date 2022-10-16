@@ -11,7 +11,7 @@ namespace CHESSGAME.Models
     {
         public Location Location { get; set; }
         public Piece Piece { get; internal set; }
-
+        public int FlagPiece { get; set; }
         public Button Button;
     }
 }

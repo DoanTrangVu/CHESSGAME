@@ -48,13 +48,22 @@
   <ItemGroup>
     <Compile Include="Controllers\ChessBoardManager.cs" />
     <Compile Include="Controllers\Cons.cs" />
+    <Compile Include="Models\Bishop.cs" />
     <Compile Include="Models\Castle.cs" />
     <Compile Include="Models\Chars.cs" />
+    <Compile Include="Models\King.cs" />
+    <Compile Include="Models\Knigh.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\Pawn.cs" />
     <Compile Include="Models\Piece.cs" />
+    <Compile Include="Models\Queen.cs" />
     <Compile Include="Models\Side.cs" />
     <Compile Include="Models\Square.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Views\frmChessGame.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -68,14 +77,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -94,6 +98,39 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ChessBoard.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\P_Pawn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\B_Castle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\B_Knigh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\B_Bishop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\B_Queen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\B_King.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\P_Castle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\P_Knigh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\P_Bishop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\P_Queen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\P_King.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

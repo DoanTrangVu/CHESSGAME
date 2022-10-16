@@ -8,7 +8,7 @@ namespace CHESSGAME.Models
 {
     public enum Side
     {
-        White,
+        Pink,
         Black
     }
 }

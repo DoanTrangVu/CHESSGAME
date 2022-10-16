@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace CHESSGAME.Models
 {
-    public class Castle : Piece
+    public class Bishop : Piece
     {
-        public Castle()
+        public Bishop()
         {
-            this.Name = "Castle";
-            this.BlackImage = "B_Castle";
-            this.PinkImage = "P_Castle";
+            this.Name = "Bishop";
+            this.BlackImage = "B_Bishop";
+            this.PinkImage = "P_Bishop";
         }
         public override List<Location> GetLegalLocations(Square square)
         {
             var list = new List<Location>();
-
+            
             return list;
         }
     }

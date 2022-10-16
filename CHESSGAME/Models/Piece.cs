@@ -12,7 +12,7 @@ namespace CHESSGAME.Models
         public Square Square { get; set; }
         public Side Side { get; set; }
         public string BlackImage { get; set; }
-        public string WhiteImage { get; set; }
+        public string PinkImage { get; set; }
         public abstract List<Location> GetLegalLocations(Square square);
         public string GetImage()
         {
@@ -20,7 +20,7 @@ namespace CHESSGAME.Models
             {
                 return this.BlackImage;
             }
-            return this.WhiteImage;
+            return this.PinkImage;
         }
     }
 }
