@@ -9,8 +9,7 @@ namespace CHESSGAME.Models
 {
     public class Square
     {
-        public int Row { get; set; }
-        public Chars Col { get; set; }
+        public Location Location { get; set; }
         public Piece Piece { get; set; }
         public Button Button;
     }

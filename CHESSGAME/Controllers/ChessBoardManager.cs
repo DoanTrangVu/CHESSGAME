@@ -73,30 +73,29 @@ namespace CHESSGAME.Controllers
                     btn.FlatAppearance.BorderSize = 0;
 
 
-                    var square = new Square() { Button = btn, Row = number, Col = (Chars)j };
+                    var square = new Square() 
+                    { 
+                        Button = btn, 
+                        Location = new Location() { Row = number, Col = (Chars)j } 
+                    };
                     pieces.Add(square);
-                    square.Button.Text = square.Row.ToString() + square.Col;
+                    square.Button.Text = square.Location.Row.ToString() + square.Location.Col;
 
                     // Logic Render Pieces
-                    if (square.Row == 7)
+                    if (square.Location.Row == 7)
                     {
-                        square.Piece = new Piece()
+                        square.Piece = new Pawn()
                         {
-                            Name = "Pawn",
-                            Side = Side.White
-                        };
-                        square.Button.Text = square.Piece.Name + square.Piece.Side;
-
-                    }
-                    if (square.Row == 2)
-                    {
-                        square.Piece = new Piece()
-                        {
-                            Name = "Pawn",
                             Side = Side.Black
                         };
+                        var image = square.Piece.GetImage();
                         square.Button.Text = square.Piece.Name + square.Piece.Side;
+                    }
 
+                    if (square.Location.Row == 2)
+                    {
+                        square.Piece = new Pawn() { Side = Side.White };
+                        square.Button.Text = square.Piece.Name + square.Piece.Side;
                     }
 
                     // Add Button
