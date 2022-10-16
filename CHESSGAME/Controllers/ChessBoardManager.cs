@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CHESSGAME.Models;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -36,10 +37,25 @@ namespace CHESSGAME.Controllers
                 BackColor = Color.Silver,
                 FlatStyle = FlatStyle.Flat,
             };
+            var pieces = new List<Square>();
             for (int i = 0; i < Cons.CHESS_BOARD_HEIGHT; i++)
             {
+                var number = Cons.CHESS_BOARD_HEIGHT - i;
                 for (int j = 0; j <= Cons.CHESS_BOARD_WIDTH; j++)
                 {
+                    var chars = new char[9]
+                    {
+                        'A',
+                        'B',
+                        'C',
+                        'D',
+                        'E',
+                        'F',
+                        'G',
+                        'H',
+                        '0'
+                    };
+                    var character = (Chars)j;
                     Button btn = new Button()
                     {
                         Width = Cons.CHESS_WIDTH,
@@ -55,6 +71,11 @@ namespace CHESSGAME.Controllers
                     btn.Click += btn_Click;
                     btn.FlatStyle = FlatStyle.Flat;
                     btn.FlatAppearance.BorderSize = 0;
+
+                    var square = new Square() { Button = btn, Row = number, Col = (Chars)j };
+                    pieces.Add(square);
+                    square.Button.Text = square.Row.ToString() + square.Col;
+
                     ChessBoard.Controls.Add(btn);
                     oldButton = btn;
                 }

@@ -48,7 +48,9 @@
   <ItemGroup>
     <Compile Include="Controllers\ChessBoardManager.cs" />
     <Compile Include="Controllers\Cons.cs" />
+    <Compile Include="Models\Chars.cs" />
     <Compile Include="Models\Square.cs" />
+    <Compile Include="Models\Square1.cs" />
     <Compile Include="Views\frmChessGame.cs">
       <SubType>Form</SubType>
     </Compile>
