@@ -55,7 +55,6 @@
     <Compile Include="Models\Piece.cs" />
     <Compile Include="Models\Side.cs" />
     <Compile Include="Models\Square.cs" />
-    <Compile Include="Models\Square1.cs" />
     <Compile Include="Views\frmChessGame.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,7 +89,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\B_Pawn.png" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ChessBoard.jpg" />
   </ItemGroup>

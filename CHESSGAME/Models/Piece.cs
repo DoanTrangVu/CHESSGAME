@@ -9,6 +9,7 @@ namespace CHESSGAME.Models
     public abstract class Piece
     {
         public string Name { get; set; }
+        public Square Square { get; set; }
         public Side Side { get; set; }
         public string BlackImage { get; set; }
         public string WhiteImage { get; set; }

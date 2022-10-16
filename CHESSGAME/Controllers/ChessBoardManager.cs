@@ -43,19 +43,7 @@ namespace CHESSGAME.Controllers
                 var number = Cons.CHESS_BOARD_HEIGHT - i;
                 for (int j = 0; j <= Cons.CHESS_BOARD_WIDTH; j++)
                 {
-                    var chars = new char[9]
-                    {
-                        'A',
-                        'B',
-                        'C',
-                        'D',
-                        'E',
-                        'F',
-                        'G',
-                        'H',
-                        '0'
-                    };
-                    var character = (Chars)j;
+                    //var character = (Chars)j;
                     Button btn = new Button()
                     {
                         Width = Cons.CHESS_WIDTH,
@@ -71,30 +59,49 @@ namespace CHESSGAME.Controllers
                     btn.Click += btn_Click;
                     btn.FlatStyle = FlatStyle.Flat;
                     btn.FlatAppearance.BorderSize = 0;
-
-
                     var square = new Square() 
                     { 
                         Button = btn, 
                         Location = new Location() { Row = number, Col = (Chars)j } 
                     };
                     pieces.Add(square);
-                    square.Button.Text = square.Location.Row.ToString() + square.Location.Col;
+                    //square.Button.Text = square.Location.Row.ToString() + square.Location.Col;
 
                     // Logic Render Pieces
+                    if (square.Location.Row == 8 && square.Location.Col == Chars.A && square.Location.Col == Chars.H)
+                    {
+                        square.Piece = new Castle()
+                        {
+                            Side = Side.Black,
+                            Square = square
+                        };
+                        var image = square.Piece.GetImage();
+                        //square.Button.BackgroundImage = Image.FromFile(Application.StartupPath + image);
+                        square.Button.BackgroundImageLayout = ImageLayout.Stretch;
+                        square.Button.Text = square.Piece.Name + square.Piece.Side;
+                    }
                     if (square.Location.Row == 7)
                     {
                         square.Piece = new Pawn()
                         {
-                            Side = Side.Black
+                            Side = Side.Black,
+                            Square = square
                         };
                         var image = square.Piece.GetImage();
+                        //square.Button.BackgroundImage = Image.FromFile(Application.StartupPath + image);
+                        square.Button.BackgroundImageLayout = ImageLayout.Stretch;
                         square.Button.Text = square.Piece.Name + square.Piece.Side;
                     }
 
                     if (square.Location.Row == 2)
                     {
-                        square.Piece = new Pawn() { Side = Side.White };
+                        square.Piece = new Pawn() 
+                        { 
+                            Side = Side.White,
+                            Square = square
+                        };
+                        var image = square.Piece.GetImage();
+                        square.Button.BackgroundImageLayout = ImageLayout.Stretch;
                         square.Button.Text = square.Piece.Name + square.Piece.Side;
                     }
 

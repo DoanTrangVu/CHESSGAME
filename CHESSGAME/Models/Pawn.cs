@@ -11,6 +11,8 @@ namespace CHESSGAME.Models
         public Pawn()
         {
             this.Name = "Pawn";
+            this.BlackImage = "D:\\Code\\CHESSGAME\\CHESSGAME\\Resources\\B_Pawn.png";
+            this.BlackImage = "D:\\Code\\CHESSGAME\\CHESSGAME\\Resources\\P_Pawn.png";
         }
 
         public override List<Location> GetLegalLocations(Square square)
