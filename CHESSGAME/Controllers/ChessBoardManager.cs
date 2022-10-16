@@ -65,7 +65,8 @@ namespace CHESSGAME.Controllers
                     {
                         Button = btn,
                         FlagPiece = 0,
-                        Location = new Location() { Row = number, Col = (Chars)j } 
+                        Location = new Location() { Row = number, Col = (Chars)j },
+                        Color = btn.BackColor
                     };
                     pieces.Add(square);
                     //square.Button.Text = square.Location.Row.ToString() + square.Location.Col;
@@ -87,7 +88,7 @@ namespace CHESSGAME.Controllers
                     if (square.Location.Row == 8 && (square.Location.Col == Chars.B || square.Location.Col == Chars.G))
                     {
                         square.FlagPiece = 2;
-                        square.Piece = new Knigh()
+                        square.Piece = new Knight()
                         {
                             Side = Side.Black,
                             Square = square
@@ -171,7 +172,7 @@ namespace CHESSGAME.Controllers
                     if (square.Location.Row == 1 && (square.Location.Col == Chars.B || square.Location.Col == Chars.G))
                     {
                         square.FlagPiece = 1;
-                        square.Piece = new Knigh()
+                        square.Piece = new Knight()
                         {
                             Side = Side.Pink,
                             Square = square
@@ -256,28 +257,40 @@ namespace CHESSGAME.Controllers
         void btn_Click(object sender, EventArgs e)
         {
             Button btn = sender as Button;
-            btn.FlatStyle = FlatStyle.Flat;
-            btn.FlatAppearance.BorderSize = 1;
-            btn.FlatAppearance.BorderColor = Color.Red;
+            
+            
 
             // Get Square that has this button (btn)
-            var square = squares.Where(s => s.Button.Equals(btn)).FirstOrDefault();
-            if (square == null)
+            var currentSquare = squares.Where(s => s.Button.Equals(btn)).FirstOrDefault();
+            if (currentSquare == null)
             {
                 MessageBox.Show("Cannot found!");
                 return;
             }
             // Get all Legal Location
-            var locations = square.Piece.GetLegalLocations(square);
+            var locations = currentSquare.Piece.GetLegalLocations(currentSquare);
             // Each Legal Location change that Square's BackColor to Red
             locations.ForEach(l =>
             {
-                var legalSquare = squares.Find(sq => sq.Location.Row == l.Row && sq.Location.Col == l.Col);
+                var legalSquare = squares.Find(sq => sq.Location.Row == l.Row 
+                && sq.Location.Col == l.Col 
+                && (sq.Piece == null || sq.Piece.Side != currentSquare.Piece.Side));
+
                 if (legalSquare != null)
                 {
-                    legalSquare.Button.BackColor = Color.Red;
+
+                    if (btn.FlatAppearance.BorderColor == Color.Red)
+                    {
+                        legalSquare.ResetColor();
+                    }
+                    else
+                        legalSquare.Button.BackColor = Color.Red;
                 }
+                btn.FlatStyle = FlatStyle.Flat;
+                btn.FlatAppearance.BorderSize = 1;
+                btn.FlatAppearance.BorderColor = Color.Red;
             });
+            
         }
         #endregion
     }

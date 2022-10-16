@@ -127,8 +127,8 @@
   <data name="B_King" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\B_King.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="B_Knigh" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\B_Knigh.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="B_Knight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\B_Knight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="B_Pawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\B_Pawn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -148,8 +148,8 @@
   <data name="P_King" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\P_King.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="P_Knigh" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\P_Knigh.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="P_Knight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\P_Knight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="P_Pawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\P_Pawn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

@@ -52,7 +52,7 @@
     <Compile Include="Models\Castle.cs" />
     <Compile Include="Models\Chars.cs" />
     <Compile Include="Models\King.cs" />
-    <Compile Include="Models\Knigh.cs" />
+    <Compile Include="Models\Knight.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\Pawn.cs" />
     <Compile Include="Models\Piece.cs" />
@@ -106,9 +106,6 @@
     <None Include="Resources\B_Castle.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\B_Knigh.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\B_Bishop.png" />
   </ItemGroup>
   <ItemGroup>
@@ -121,9 +118,6 @@
     <None Include="Resources\P_Castle.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\P_Knigh.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\P_Bishop.png" />
   </ItemGroup>
   <ItemGroup>
@@ -131,6 +125,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\P_King.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\B_Knight.png" />
+    <Content Include="Resources\P_Knight.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

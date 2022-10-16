@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace CHESSGAME.Models
 {
-    public class Knigh : Piece
+    public class Knight : Piece
     {
-        public Knigh()
+        public Knight()
         {
-            this.Name = "Knigh";
-            this.BlackImage = "B_Knigh";
-            this.PinkImage = "P_Knigh";
+            this.Name = "Knight";
+            this.BlackImage = "B_Knight";
+            this.PinkImage = "P_Knight";
         }
         public override List<Location> GetLegalLocations(Square square)
         {

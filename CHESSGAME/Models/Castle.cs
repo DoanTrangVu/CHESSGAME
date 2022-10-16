@@ -17,7 +17,10 @@ namespace CHESSGAME.Models
         public override List<Location> GetLegalLocations(Square square)
         {
             var list = new List<Location>();
-
+            for (int i = 0; i <= 8; i++)
+                list.Add(new Location() { Row = i, Col = square.Location.Col });
+            for (int i = 0; i <= 8; i++)
+                list.Add(new Location() { Row = square.Location.Row, Col = (Chars)i });
             return list;
         }
     }

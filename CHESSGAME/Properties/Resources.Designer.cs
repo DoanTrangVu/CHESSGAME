@@ -93,9 +93,9 @@ namespace CHESSGAME.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap B_Knigh {
+        internal static System.Drawing.Bitmap B_Knight {
             get {
-                object obj = ResourceManager.GetObject("B_Knigh", resourceCulture);
+                object obj = ResourceManager.GetObject("B_Knight", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -163,9 +163,9 @@ namespace CHESSGAME.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap P_Knigh {
+        internal static System.Drawing.Bitmap P_Knight {
             get {
-                object obj = ResourceManager.GetObject("P_Knigh", resourceCulture);
+                object obj = ResourceManager.GetObject("P_Knight", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
