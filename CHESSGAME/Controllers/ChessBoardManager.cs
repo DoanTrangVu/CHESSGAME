@@ -64,7 +64,6 @@ namespace CHESSGAME.Controllers
                     var square = new Square()
                     {
                         Button = btn,
-                        FlagPiece = 0,
                         Location = new Location() { Row = number, Col = (Chars)j },
                         Color = btn.BackColor
                     };
@@ -82,12 +81,10 @@ namespace CHESSGAME.Controllers
                         Bitmap img = (Bitmap)Properties.Resources.ResourceManager.GetObject(image);
                         square.Button.BackgroundImage = img;
                         square.Button.BackgroundImageLayout = ImageLayout.Stretch;
-                        square.FlagPiece = 2;
                         //square.Button.Text = square.Piece.Name + square.Piece.Side;
                     }
                     if (square.Location.Row == 8 && (square.Location.Col == Chars.B || square.Location.Col == Chars.G))
                     {
-                        square.FlagPiece = 2;
                         square.Piece = new Knight()
                         {
                             Side = Side.Black,
@@ -101,7 +98,6 @@ namespace CHESSGAME.Controllers
                     }
                     if (square.Location.Row == 8 && (square.Location.Col == Chars.C || square.Location.Col == Chars.F))
                     {
-                        square.FlagPiece = 2;
                         square.Piece = new Bishop()
                         {
                             Side = Side.Black,
@@ -115,7 +111,6 @@ namespace CHESSGAME.Controllers
                     }
                     if (square.Location.Row == 8 && square.Location.Col == Chars.D)
                     {
-                        square.FlagPiece = 2;
                         square.Piece = new Queen()
                         {
                             Side = Side.Black,
@@ -129,7 +124,6 @@ namespace CHESSGAME.Controllers
                     }
                     if (square.Location.Row == 8 && square.Location.Col == Chars.E)
                     {
-                        square.FlagPiece = 2;
                         square.Piece = new King()
                         {
                             Side = Side.Black,
@@ -143,7 +137,6 @@ namespace CHESSGAME.Controllers
                     }
                     if (square.Location.Row == 7)
                     {
-                        square.FlagPiece = 2;
                         square.Piece = new Pawn()
                         {
                             Side = Side.Black,
@@ -157,7 +150,6 @@ namespace CHESSGAME.Controllers
                     }
                     if (square.Location.Row == 1 && (square.Location.Col == Chars.A || square.Location.Col == Chars.H))
                     {
-                        square.FlagPiece = 1;
                         square.Piece = new Castle()
                         {
                             Side = Side.Pink,
@@ -171,7 +163,6 @@ namespace CHESSGAME.Controllers
                     }
                     if (square.Location.Row == 1 && (square.Location.Col == Chars.B || square.Location.Col == Chars.G))
                     {
-                        square.FlagPiece = 1;
                         square.Piece = new Knight()
                         {
                             Side = Side.Pink,
@@ -185,7 +176,6 @@ namespace CHESSGAME.Controllers
                     }
                     if (square.Location.Row == 1 && (square.Location.Col == Chars.C || square.Location.Col == Chars.F))
                     {
-                        square.FlagPiece = 1;
                         square.Piece = new Bishop()
                         {
                             Side = Side.Pink,
@@ -199,7 +189,6 @@ namespace CHESSGAME.Controllers
                     }
                     if (square.Location.Row == 1 && square.Location.Col == Chars.D)
                     {
-                        square.FlagPiece = 1;
                         square.Piece = new King()
                         {
                             Side = Side.Pink,
@@ -213,7 +202,6 @@ namespace CHESSGAME.Controllers
                     }
                     if (square.Location.Row == 1 && square.Location.Col == Chars.E)
                     {
-                        square.FlagPiece = 1;
                         square.Piece = new Queen()
                         {
                             Side = Side.Pink,
@@ -227,7 +215,6 @@ namespace CHESSGAME.Controllers
                     }
                     if (square.Location.Row == 2)
                     {
-                        square.FlagPiece = 1;
                         square.Piece = new Pawn() 
                         { 
                             Side = Side.Pink,
@@ -254,17 +241,36 @@ namespace CHESSGAME.Controllers
                     oldButton.BackColor = Color.Silver;
             }
         }
+        Piece currentPiece;
+        List<Square> legalSquares = new List<Square>();
         void btn_Click(object sender, EventArgs e)
         {
             Button btn = sender as Button;
-            
-            
+
+            // Disable Board
+            // squares.ForEach(s => s.Disable());
+            // Disable Board
 
             // Get Square that has this button (btn)
             var currentSquare = squares.Where(s => s.Button.Equals(btn)).FirstOrDefault();
             if (currentSquare == null)
             {
                 MessageBox.Show("Cannot found!");
+                return;
+            }
+
+            bool isUpdate = false;
+            if (legalSquares.Contains(currentSquare))
+            {
+                currentPiece.UpdateLocation(currentSquare);
+                squares.ForEach(s => s.ResetColor());
+                legalSquares.Clear();
+                isUpdate = true;
+            }
+            
+
+            if (currentSquare.Piece == null)
+            {
                 return;
             }
             // Get all Legal Location
@@ -278,19 +284,32 @@ namespace CHESSGAME.Controllers
 
                 if (legalSquare != null)
                 {
-
-                    if (btn.FlatAppearance.BorderColor == Color.Red)
+                    if (btn.FlatAppearance.BorderColor == Color.Red || isUpdate)
                     {
                         legalSquare.ResetColor();
+                        legalSquares.Remove(legalSquare);
                     }
                     else
+                    {
                         legalSquare.Button.BackColor = Color.Red;
+
+                        legalSquares.Add(legalSquare);
+                    }
                 }
-                btn.FlatStyle = FlatStyle.Flat;
-                btn.FlatAppearance.BorderSize = 1;
-                btn.FlatAppearance.BorderColor = Color.Red;
+
             });
-            
+            if (currentSquare.IsClick && !isUpdate)
+            {
+                currentSquare.UnSelect();
+                currentSquare.IsClick = false;
+            }
+            else if (!currentSquare.IsClick && !isUpdate)
+            {
+                currentSquare.Select();
+                currentPiece = currentSquare.Piece;
+                currentSquare.IsClick = true;
+            }
+
         }
         #endregion
     }

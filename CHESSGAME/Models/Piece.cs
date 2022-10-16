@@ -22,5 +22,19 @@ namespace CHESSGAME.Models
             }
             return this.PinkImage;
         }
+        public void UpdateLocation(Square newSquare)
+        {
+            newSquare.ResetColor();
+
+            newSquare.Button.BackgroundImage = this.Square.Button.BackgroundImage;
+            this.Square.Button.BackgroundImage = null;
+
+            newSquare.Piece = this;
+
+            this.Square.UnSelect();
+            this.Square.Piece = null;
+
+            this.Square = newSquare;
+        }
     }
 }
