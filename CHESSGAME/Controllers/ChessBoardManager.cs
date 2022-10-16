@@ -28,6 +28,8 @@ namespace CHESSGAME.Controllers
         #endregion
 
         #region Methods
+        // List Contains all Square
+        List<Square> squares = new List<Square>();
         public void DrawChessBoard()
         {
             Button oldButton = new Button()
@@ -238,6 +240,8 @@ namespace CHESSGAME.Controllers
                     }
                     // Add Button
                     ChessBoard.Controls.Add(btn);
+                    // Add Square
+                    squares.Add(square);
                     oldButton = btn;
                 }
                 oldButton.Location = new Point(30, oldButton.Location.Y + Cons.CHESS_HEIGHT);
@@ -255,7 +259,25 @@ namespace CHESSGAME.Controllers
             btn.FlatStyle = FlatStyle.Flat;
             btn.FlatAppearance.BorderSize = 1;
             btn.FlatAppearance.BorderColor = Color.Red;
-            //var locations = piece.GetLegalLocations(square);
+
+            // Get Square that has this button (btn)
+            var square = squares.Where(s => s.Button.Equals(btn)).FirstOrDefault();
+            if (square == null)
+            {
+                MessageBox.Show("Cannot found!");
+                return;
+            }
+            // Get all Legal Location
+            var locations = square.Piece.GetLegalLocations(square);
+            // Each Legal Location change that Square's BackColor to Red
+            locations.ForEach(l =>
+            {
+                var legalSquare = squares.Find(sq => sq.Location.Row == l.Row && sq.Location.Col == l.Col);
+                if (legalSquare != null)
+                {
+                    legalSquare.Button.BackColor = Color.Red;
+                }
+            });
         }
         #endregion
     }
