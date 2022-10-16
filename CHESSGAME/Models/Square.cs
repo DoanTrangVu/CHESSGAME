@@ -11,7 +11,7 @@ namespace CHESSGAME.Models
     {
         public int Row { get; set; }
         public Chars Col { get; set; }
-        public string PieceName { get; set; }
+        public Piece Piece { get; set; }
         public Button Button;
     }
 }

@@ -72,10 +72,34 @@ namespace CHESSGAME.Controllers
                     btn.FlatStyle = FlatStyle.Flat;
                     btn.FlatAppearance.BorderSize = 0;
 
+
                     var square = new Square() { Button = btn, Row = number, Col = (Chars)j };
                     pieces.Add(square);
                     square.Button.Text = square.Row.ToString() + square.Col;
 
+                    // Logic Render Pieces
+                    if (square.Row == 7)
+                    {
+                        square.Piece = new Piece()
+                        {
+                            Name = "Pawn",
+                            Side = Side.White
+                        };
+                        square.Button.Text = square.Piece.Name + square.Piece.Side;
+
+                    }
+                    if (square.Row == 2)
+                    {
+                        square.Piece = new Piece()
+                        {
+                            Name = "Pawn",
+                            Side = Side.Black
+                        };
+                        square.Button.Text = square.Piece.Name + square.Piece.Side;
+
+                    }
+
+                    // Add Button
                     ChessBoard.Controls.Add(btn);
                     oldButton = btn;
                 }
