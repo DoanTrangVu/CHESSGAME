@@ -20,9 +20,27 @@ namespace CHESSGAME.Models
         {
             var list = new List<Location>();
             if (this.Side == Side.Black)
-                list.Add(new Location() { Row = square.Location.Row - 2, Col = square.Location.Col });
+            {
+                
+                if (square.Location.Row == 7)
+                {
+                    list.Add(new Location() { Row = square.Location.Row - 2, Col = square.Location.Col });
+                    list.Add(new Location() { Row = square.Location.Row - 1, Col = square.Location.Col });
+                }
+                else
+                    list.Add(new Location() { Row = square.Location.Row - 1, Col = square.Location.Col });
+            }
             if (this.Side == Side.Pink)
-                list.Add(new Location() { Row = square.Location.Row + 2, Col = square.Location.Col });
+            {
+                
+                if (square.Location.Row == 2)
+                {
+                    list.Add(new Location() { Row = square.Location.Row + 2, Col = square.Location.Col });
+                    list.Add(new Location() { Row = square.Location.Row + 1, Col = square.Location.Col });
+                }
+                else
+                    list.Add(new Location() { Row = square.Location.Row + 1, Col = square.Location.Col });
+            }
             return list;
         }
     }

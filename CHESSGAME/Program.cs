@@ -9,15 +9,14 @@ namespace CHESSGAME
 {
     internal static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmChessGame());
+            //Application.Run(new frmChessGame(frmLogin));
+            Application.Run(new frmLogin());
+            //Application.Run(new frmRegister());
         }
     }
 }

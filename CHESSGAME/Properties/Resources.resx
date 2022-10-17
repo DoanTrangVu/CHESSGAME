@@ -118,29 +118,62 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="B_Bishop" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\B_Bishop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="B_Castle" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\B_Castle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="B_King" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\B_King.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="B_Knight" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\B_Knight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="B_Pawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\B_Pawn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="B_Queen" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\B_Queen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="new-game-rgb-color-icon-vector-35393732" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\new-game-rgb-color-icon-vector-35393732.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ChessBoard" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ChessBoard.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="B_King" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\B_King.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="P_Queen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\P_Queen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="iconUser1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\iconUser1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="B_Knight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\B_Knight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="P_Pawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\P_Pawn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="iconExit" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\iconExit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="iconUser" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\iconUser.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="B_Queen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\B_Queen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="User" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\User.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="P_Bishop" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\P_Bishop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="User1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\User1.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="B_Bishop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\B_Bishop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="undo-27" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\undo-27.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="P_Knight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\P_Knight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BG_Login" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BG_Login.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="B_Castle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\B_Castle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="B_Pawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\B_Pawn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="P_Castle" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\P_Castle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -148,13 +181,13 @@
   <data name="P_King" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\P_King.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="P_Knight" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\P_Knight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="undo-271" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\undo-271.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="P_Pawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\P_Pawn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="iconNewGame" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\iconNewGame.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="P_Queen" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\P_Queen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="BG_Register" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BG_Register.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

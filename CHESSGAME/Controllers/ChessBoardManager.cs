@@ -13,17 +13,66 @@ namespace CHESSGAME.Controllers
     {
         #region Properties
         private Panel chessBoard;
+        public Boolean isChoosePiece = false;
         public Panel ChessBoard
         {
             get { return chessBoard; }
             set { chessBoard = value; }
         }
+        private List<Player> player;
+        public List<Player> Player
+        {
+            get { return player; }
+            set { player = value; }
+        }
+        private Side currentPlayer;
+        public Side CurrentPlayer 
+        { 
+            get { return currentPlayer; }
+            set { currentPlayer = value; }
+        }
+        private PictureBox pctPlayerBlack;
+        public PictureBox PctPlayerBlack
+        {
+            get { return pctPlayerBlack; }
+            set { pctPlayerBlack = value; }
+        }
+        private PictureBox pctPlayerPink;
+        public PictureBox PctPlayerPink
+        {
+            get { return pctPlayerPink; }
+            set { pctPlayerPink = value; }
+        }
+        private Label lblNamePlayerPink;
+        public Label LblNamePlayerPink
+        {
+            get { return lblNamePlayerPink; }
+            set { lblNamePlayerPink = value; }
+        }
+        private Label lblNamePlayerBlack;
+        public Label LblNamePlayerBlack
+        {
+            get { return lblNamePlayerBlack; }
+            set { lblNamePlayerBlack = value; }
+        }
         #endregion
 
         #region Initialize
-        public ChessBoardManager(Panel chessBoard)
+        public ChessBoardManager(Panel chessBoard, PictureBox pctPlayerBlack, Label lblNamePlayerBlack, PictureBox pctPlayerPink, Label lblNamePlayerPink)
         {
             this.ChessBoard = chessBoard;
+            this.PctPlayerBlack = pctPlayerBlack;
+            this.PctPlayerPink = pctPlayerPink;
+            this.LblNamePlayerBlack = lblNamePlayerBlack;
+            this.LblNamePlayerPink = lblNamePlayerPink;
+
+            this.Player = new List<Player>()
+            {
+                //new Player ("user1", Image.FromFile(Application.StartupPath + "\\Resources\\B_Pawn.png")),
+                //new Player ("user2", Image.FromFile(Application.StartupPath + "\\Resources\\P_Pawn.png"))
+            };
+            CurrentPlayer = Side.Pink;
+            pctPlayerPink.BackColor = Color.Red;
         }
         #endregion
 
@@ -32,6 +81,7 @@ namespace CHESSGAME.Controllers
         List<Square> squares = new List<Square>();
         public void DrawChessBoard()
         {
+            ChessBoard.Controls.Clear();
             Button oldButton = new Button()
             {
                 Width = 0,
@@ -111,7 +161,7 @@ namespace CHESSGAME.Controllers
                     }
                     if (square.Location.Row == 8 && square.Location.Col == Chars.D)
                     {
-                        square.Piece = new Queen()
+                        square.Piece = new King()
                         {
                             Side = Side.Black,
                             Square = square
@@ -124,7 +174,7 @@ namespace CHESSGAME.Controllers
                     }
                     if (square.Location.Row == 8 && square.Location.Col == Chars.E)
                     {
-                        square.Piece = new King()
+                        square.Piece = new Queen()
                         {
                             Side = Side.Black,
                             Square = square
@@ -189,7 +239,7 @@ namespace CHESSGAME.Controllers
                     }
                     if (square.Location.Row == 1 && square.Location.Col == Chars.D)
                     {
-                        square.Piece = new King()
+                        square.Piece = new Queen()
                         {
                             Side = Side.Pink,
                             Square = square
@@ -202,7 +252,7 @@ namespace CHESSGAME.Controllers
                     }
                     if (square.Location.Row == 1 && square.Location.Col == Chars.E)
                     {
-                        square.Piece = new Queen()
+                        square.Piece = new King()
                         {
                             Side = Side.Pink,
                             Square = square
@@ -246,13 +296,26 @@ namespace CHESSGAME.Controllers
         void btn_Click(object sender, EventArgs e)
         {
             Button btn = sender as Button;
-
             // Disable Board
-            // squares.ForEach(s => s.Disable());
-            // Disable Board
+            //squares.ForEach(s => s.Disable());
+            //Disable Board
 
             // Get Square that has this button (btn)
             var currentSquare = squares.Where(s => s.Button.Equals(btn)).FirstOrDefault();
+            if (currentSquare.Piece != null)
+            {
+                if (currentSquare.Piece.Side != currentPlayer && !isChoosePiece)
+                {
+                    return;
+                }
+            }
+            
+
+            //Return when a piece is being chosen
+            if ((isChoosePiece && currentSquare.Piece != currentPiece && !legalSquares.Contains(currentSquare)))
+            {
+                return;
+            }
             if (currentSquare == null)
             {
                 MessageBox.Show("Cannot found!");
@@ -263,12 +326,11 @@ namespace CHESSGAME.Controllers
             if (legalSquares.Contains(currentSquare))
             {
                 currentPiece.UpdateLocation(currentSquare);
+                ChangePlayer();
                 squares.ForEach(s => s.ResetColor());
                 legalSquares.Clear();
-                isUpdate = true;
+                isUpdate = true;   
             }
-            
-
             if (currentSquare.Piece == null)
             {
                 return;
@@ -281,33 +343,48 @@ namespace CHESSGAME.Controllers
                 var legalSquare = squares.Find(sq => sq.Location.Row == l.Row 
                 && sq.Location.Col == l.Col 
                 && (sq.Piece == null || sq.Piece.Side != currentSquare.Piece.Side));
-
+                //MessageBox.Show($"|{legalSquare}|");
                 if (legalSquare != null)
                 {
                     if (btn.FlatAppearance.BorderColor == Color.Red || isUpdate)
                     {
                         legalSquare.ResetColor();
+                        isChoosePiece = false;
                         legalSquares.Remove(legalSquare);
                     }
                     else
                     {
                         legalSquare.Button.BackColor = Color.Red;
-
                         legalSquares.Add(legalSquare);
                     }
                 }
-
             });
             if (currentSquare.IsClick && !isUpdate)
             {
                 currentSquare.UnSelect();
+                isChoosePiece = false;
                 currentSquare.IsClick = false;
             }
             else if (!currentSquare.IsClick && !isUpdate)
             {
                 currentSquare.Select();
+                isChoosePiece = true;
                 currentPiece = currentSquare.Piece;
                 currentSquare.IsClick = true;
+            }
+        }
+        private void ChangePlayer()
+        {
+            currentPlayer = currentPlayer == Side.Pink ? Side.Black : Side.Pink;
+            if (currentPlayer == Side.Pink)
+            {
+                pctPlayerPink.BackColor = Color.Red;
+                pctPlayerBlack.BackColor = Color.Transparent;
+            }
+            else
+            {
+                pctPlayerBlack.BackColor = Color.Red;
+                pctPlayerPink.BackColor = Color.Transparent;
             }
 
         }
