@@ -292,7 +292,6 @@
             this.Controls.Add(this.mnuChessGame);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.mnuChessGame;
-            this.Name = "frmChessGame";
             this.Text = "ChessGame";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmChessGame_FormClosing);
             this.Load += new System.EventHandler(this.frmChessGame_Load);

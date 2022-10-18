@@ -104,7 +104,7 @@ namespace CHESSGAME.Views
                 pnlChessBoard.Enabled = false;
                 Listen();
             }
-            if
+
         }
         void Listen()
         {
