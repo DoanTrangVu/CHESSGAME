@@ -21,6 +21,10 @@ namespace CHESSGAME.Models
             get { return side; }
             set { side = value; }
         }
+        public PlayInfo(String name)
+        {
+            this.Name = name;
+        }
         public PlayInfo(Point point, Side side)
         {
             this.Point = point;

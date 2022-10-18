@@ -124,8 +124,8 @@ namespace CHESSGAME.Controllers
 
             this.Player = new List<PlayInfo>()
             {
-                //new Player ("user1", Image.FromFile(Application.StartupPath + "\\Resources\\B_Pawn.png")),
-                //new Player ("user2", Image.FromFile(Application.StartupPath + "\\Resources\\P_Pawn.png"))
+                new PlayInfo ("user1"),
+                new PlayInfo ("user2")
             };
             CurrentPlayer = Side.Pink;
             pctPlayerPink.BackColor = Color.Red;
@@ -544,7 +544,9 @@ namespace CHESSGAME.Controllers
             }
             foundStartSquare.Piece.UpdateLocation(foundSquare);
             PlayTimeLine.Push(new PlayInfo(GetChessPoint(btn), currentPlayer));
-            currentPlayer = currentPlayer == Side.Pink ? Side.Black : Side.Pink;
+            //currentPlayer = currentPlayer == Side.Pink ? Side.Black : Side.Pink;
+            
+
             ChangePlayer();
         }
         private Point GetChessPoint(Button btn)

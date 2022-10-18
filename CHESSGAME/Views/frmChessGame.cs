@@ -47,9 +47,10 @@ namespace CHESSGAME.Views
         }
         private void tlsNewGame_Click(object sender, EventArgs e)
         {
-            //frmChessGame();
-            
+            Control.CheckForIllegalCrossThreadCalls = false;
             ChessBoard = new ChessBoardManager(pnlChessBoard, pctPlayerBlack, lblNamePlayerBlack, pctPlayerPink, lblNamePlayerPink, dgvListMove);
+            ChessBoard.PlayerPieceMarked += ChessBoard_PlayerPieceMarked;
+            socket = new SocketManager();
             NewGame();
         }
 
@@ -90,7 +91,7 @@ namespace CHESSGAME.Views
         private void btnLAN_Click(object sender, EventArgs e)
         {
             socket.IP = txtIP.Text;
-
+            int a = 1;
             if (!socket.ConnectServer())
             {
                 socket.isServer = true;
@@ -103,6 +104,7 @@ namespace CHESSGAME.Views
                 pnlChessBoard.Enabled = false;
                 Listen();
             }
+            if
         }
         void Listen()
         {
