@@ -42,6 +42,11 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Sockets, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Sockets.4.3.0\lib\net46\System.Net.Sockets.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
@@ -57,6 +62,8 @@
   <ItemGroup>
     <Compile Include="Controllers\ChessBoardManager.cs" />
     <Compile Include="Controllers\Cons.cs" />
+    <Compile Include="Controllers\Sockets\SocketData.cs" />
+    <Compile Include="Controllers\Sockets\SocketManager.cs" />
     <Compile Include="Models\Bishop.cs" />
     <Compile Include="Models\Castle.cs" />
     <Compile Include="Models\Chars.cs" />
@@ -67,7 +74,7 @@
     <Compile Include="Models\Model1.cs" />
     <Compile Include="Models\Pawn.cs" />
     <Compile Include="Models\Piece.cs" />
-    <Compile Include="Models\Player.cs" />
+    <Compile Include="Models\PlayInfo.cs" />
     <Compile Include="Models\Queen.cs" />
     <Compile Include="Models\Side.cs" />
     <Compile Include="Models\Square.cs" />
@@ -163,6 +170,9 @@
     <Content Include="Resources\P_King.png" />
     <Content Include="Resources\P_Knight.png" />
     <Content Include="Resources\P_Queen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Sockets\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -28,11 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmChessGame));
             this.panel2 = new System.Windows.Forms.Panel();
             this.lblNamePlayerBlack = new System.Windows.Forms.Label();
             this.pctPlayerBlack = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.btnStartTime = new System.Windows.Forms.Button();
             this.mnuChessGame = new System.Windows.Forms.MenuStrip();
             this.tlsNewGame = new System.Windows.Forms.ToolStripMenuItem();
             this.tlsUndo = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,12 +42,24 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblNamePlayerPink = new System.Windows.Forms.Label();
             this.pctPlayerPink = new System.Windows.Forms.PictureBox();
+            this.lblTimePink = new System.Windows.Forms.Label();
             this.pnlChessBoard = new System.Windows.Forms.Panel();
+            this.lblTimeBlack = new System.Windows.Forms.Label();
+            this.tmrBlack = new System.Windows.Forms.Timer(this.components);
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.dgvListMove = new System.Windows.Forms.DataGridView();
+            this.STT = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Move = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnLAN = new System.Windows.Forms.Button();
+            this.txtIP = new System.Windows.Forms.TextBox();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pctPlayerBlack)).BeginInit();
             this.mnuChessGame.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pctPlayerPink)).BeginInit();
+            this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvListMove)).BeginInit();
             this.SuspendLayout();
             // 
             // panel2
@@ -53,11 +67,11 @@
             this.panel2.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.panel2.Controls.Add(this.lblNamePlayerBlack);
             this.panel2.Controls.Add(this.pctPlayerBlack);
+            this.panel2.Controls.Add(this.label2);
             this.panel2.Location = new System.Drawing.Point(429, 33);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(281, 119);
             this.panel2.TabIndex = 1;
-            this.panel2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel2_MouseClick);
             // 
             // lblNamePlayerBlack
             // 
@@ -79,14 +93,25 @@
             this.pctPlayerBlack.TabIndex = 1;
             this.pctPlayerBlack.TabStop = false;
             // 
-            // label1
+            // label2
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(514, 223);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "label1";
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(1, 101);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(46, 16);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "Time:";
+            // 
+            // btnStartTime
+            // 
+            this.btnStartTime.Location = new System.Drawing.Point(431, 222);
+            this.btnStartTime.Name = "btnStartTime";
+            this.btnStartTime.Size = new System.Drawing.Size(75, 23);
+            this.btnStartTime.TabIndex = 11;
+            this.btnStartTime.Text = "StartTime";
+            this.btnStartTime.UseVisualStyleBackColor = true;
+            this.btnStartTime.Click += new System.EventHandler(this.btnStartTime_Click);
             // 
             // mnuChessGame
             // 
@@ -158,6 +183,18 @@
             this.pctPlayerPink.TabIndex = 3;
             this.pctPlayerPink.TabStop = false;
             // 
+            // lblTimePink
+            // 
+            this.lblTimePink.AutoSize = true;
+            this.lblTimePink.BackColor = System.Drawing.Color.Silver;
+            this.lblTimePink.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lblTimePink.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTimePink.Location = new System.Drawing.Point(433, 289);
+            this.lblTimePink.Name = "lblTimePink";
+            this.lblTimePink.Size = new System.Drawing.Size(48, 18);
+            this.lblTimePink.TabIndex = 10;
+            this.lblTimePink.Text = "Time:";
+            // 
             // pnlChessBoard
             // 
             this.pnlChessBoard.BackgroundImage = global::CHESSGAME.Properties.Resources.ChessBoard;
@@ -168,19 +205,97 @@
             this.pnlChessBoard.Size = new System.Drawing.Size(421, 422);
             this.pnlChessBoard.TabIndex = 0;
             // 
+            // lblTimeBlack
+            // 
+            this.lblTimeBlack.AutoSize = true;
+            this.lblTimeBlack.BackColor = System.Drawing.Color.Silver;
+            this.lblTimeBlack.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lblTimeBlack.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTimeBlack.Location = new System.Drawing.Point(433, 161);
+            this.lblTimeBlack.Name = "lblTimeBlack";
+            this.lblTimeBlack.Size = new System.Drawing.Size(48, 18);
+            this.lblTimeBlack.TabIndex = 8;
+            this.lblTimeBlack.Text = "Time:";
+            // 
+            // tmrBlack
+            // 
+            this.tmrBlack.Interval = 1000;
+            this.tmrBlack.Tick += new System.EventHandler(this.tmrBlack_Tick);
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.dgvListMove);
+            this.panel3.Location = new System.Drawing.Point(511, 158);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(199, 149);
+            this.panel3.TabIndex = 5;
+            // 
+            // dgvListMove
+            // 
+            this.dgvListMove.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvListMove.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.STT,
+            this.Name,
+            this.Move});
+            this.dgvListMove.Location = new System.Drawing.Point(3, 3);
+            this.dgvListMove.Name = "dgvListMove";
+            this.dgvListMove.Size = new System.Drawing.Size(193, 143);
+            this.dgvListMove.TabIndex = 0;
+            // 
+            // STT
+            // 
+            this.STT.HeaderText = "STT";
+            this.STT.Name = "STT";
+            this.STT.Width = 30;
+            // 
+            // Name
+            // 
+            this.Name.HeaderText = "NAME";
+            this.Name.Name = "Name";
+            this.Name.Width = 80;
+            // 
+            // Move
+            // 
+            this.Move.HeaderText = "MOVE";
+            this.Move.Name = "Move";
+            this.Move.Width = 42;
+            // 
+            // btnLAN
+            // 
+            this.btnLAN.Location = new System.Drawing.Point(429, 0);
+            this.btnLAN.Name = "btnLAN";
+            this.btnLAN.Size = new System.Drawing.Size(75, 23);
+            this.btnLAN.TabIndex = 12;
+            this.btnLAN.Text = "LAN";
+            this.btnLAN.UseVisualStyleBackColor = true;
+            this.btnLAN.Click += new System.EventHandler(this.btnLAN_Click);
+            // 
+            // txtIP
+            // 
+            this.txtIP.Location = new System.Drawing.Point(511, 1);
+            this.txtIP.Name = "txtIP";
+            this.txtIP.Size = new System.Drawing.Size(100, 20);
+            this.txtIP.TabIndex = 13;
+            // 
             // frmChessGame
             // 
             this.ClientSize = new System.Drawing.Size(720, 446);
+            this.Controls.Add(this.txtIP);
+            this.Controls.Add(this.btnLAN);
+            this.Controls.Add(this.btnStartTime);
+            this.Controls.Add(this.panel3);
+            this.Controls.Add(this.lblTimePink);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.panel2);
+            this.Controls.Add(this.lblTimeBlack);
             this.Controls.Add(this.pnlChessBoard);
             this.Controls.Add(this.mnuChessGame);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.mnuChessGame;
-            this.Name = "frmChessGame";
             this.Text = "ChessGame";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmChessGame_FormClosing);
+            this.Load += new System.EventHandler(this.frmChessGame_Load);
+            this.Shown += new System.EventHandler(this.frmChessGame_Shown);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pctPlayerBlack)).EndInit();
@@ -189,6 +304,8 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pctPlayerPink)).EndInit();
+            this.panel3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvListMove)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -198,7 +315,6 @@
 
         private System.Windows.Forms.Panel pnlChessBoard;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.MenuStrip mnuChessGame;
         private System.Windows.Forms.ToolStripMenuItem tlsNewGame;
         private System.Windows.Forms.ToolStripMenuItem tlsUndo;
@@ -208,6 +324,18 @@
         private System.Windows.Forms.PictureBox pctPlayerPink;
         private System.Windows.Forms.Label lblNamePlayerBlack;
         private System.Windows.Forms.Label lblNamePlayerPink;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblTimeBlack;
+        private System.Windows.Forms.Label lblTimePink;
+        private System.Windows.Forms.Button btnStartTime;
+        private System.Windows.Forms.Timer tmrBlack;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.DataGridView dgvListMove;
+        private System.Windows.Forms.DataGridViewTextBoxColumn STT;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Move;
+        private System.Windows.Forms.Button btnLAN;
+        private System.Windows.Forms.TextBox txtIP;
     }
 }
 

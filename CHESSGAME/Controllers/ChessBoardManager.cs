@@ -1,11 +1,16 @@
-﻿using CHESSGAME.Models;
+﻿using CHESSGAME.Controllers.Sockets;
+using CHESSGAME.Models;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
+using System.Xml.Linq;
+
 
 namespace CHESSGAME.Controllers
 {
@@ -14,13 +19,16 @@ namespace CHESSGAME.Controllers
         #region Properties
         private Panel chessBoard;
         public Boolean isChoosePiece = false;
+        public Thread cdt1, cdt2;
+        public int num1, num2;
+        public bool flagSypend1, flagSypend2;
         public Panel ChessBoard
         {
             get { return chessBoard; }
             set { chessBoard = value; }
         }
-        private List<Player> player;
-        public List<Player> Player
+        private List<PlayInfo> player;
+        public List<PlayInfo> Player
         {
             get { return player; }
             set { player = value; }
@@ -55,18 +63,66 @@ namespace CHESSGAME.Controllers
             get { return lblNamePlayerBlack; }
             set { lblNamePlayerBlack = value; }
         }
+        private Label lblTimeBlack;
+        public Label LblTimeBlack
+        {
+            get { return lblTimeBlack; }
+            set { lblTimeBlack = value; }
+        }
+        private Label lblTimePink;
+        public Label LblTimePink
+        {
+            get { return lblTimePink; }
+            set { lblTimePink = value; }
+        }
+        public DataGridView dgvListMove;
+        public DataGridView DgvListMove
+        {
+            get { return dgvListMove; }
+            set { dgvListMove = value; }
+        }
+        private List<List<Button>> matrix;
+
+        public List<List<Button>> Matrix
+        {
+            get { return matrix; }
+            set { matrix = value; }
+        }
+
+        private event EventHandler<ButtonPieceClickEvent> playerPieceMarked;
+
+        public event EventHandler<ButtonPieceClickEvent> PlayerPieceMarked
+        {
+            add
+            {
+                playerPieceMarked += value;
+            }
+            remove
+            {
+                playerPieceMarked -= value;
+            }
+        }
+        private Stack<PlayInfo> playTimeLine;
+
+        public Stack<PlayInfo> PlayTimeLine
+        {
+            get { return playTimeLine; }
+            set { playTimeLine = value; }
+        }
         #endregion
 
         #region Initialize
-        public ChessBoardManager(Panel chessBoard, PictureBox pctPlayerBlack, Label lblNamePlayerBlack, PictureBox pctPlayerPink, Label lblNamePlayerPink)
+        public ChessBoardManager(Panel chessBoard, PictureBox pctPlayerBlack, 
+            Label lblNamePlayerBlack, PictureBox pctPlayerPink, Label lblNamePlayerPink, DataGridView dgvListMove)
         {
             this.ChessBoard = chessBoard;
             this.PctPlayerBlack = pctPlayerBlack;
             this.PctPlayerPink = pctPlayerPink;
             this.LblNamePlayerBlack = lblNamePlayerBlack;
             this.LblNamePlayerPink = lblNamePlayerPink;
+            this.DgvListMove = dgvListMove;
 
-            this.Player = new List<Player>()
+            this.Player = new List<PlayInfo>()
             {
                 //new Player ("user1", Image.FromFile(Application.StartupPath + "\\Resources\\B_Pawn.png")),
                 //new Player ("user2", Image.FromFile(Application.StartupPath + "\\Resources\\P_Pawn.png"))
@@ -78,10 +134,14 @@ namespace CHESSGAME.Controllers
 
         #region Methods
         // List Contains all Square
-        List<Square> squares = new List<Square>();
+        public List<Square> squares = new List<Square>();
         public void DrawChessBoard()
         {
+            ChessBoard.Enabled = true;
+            PlayTimeLine = new Stack<PlayInfo>();
+            Matrix = new List<List<Button>>();
             ChessBoard.Controls.Clear();
+            //ChangePlayer();
             Button oldButton = new Button()
             {
                 Width = 0,
@@ -92,6 +152,7 @@ namespace CHESSGAME.Controllers
             var pieces = new List<Square>();
             for (int i = 0; i < Cons.CHESS_BOARD_HEIGHT; i++)
             {
+                Matrix.Add(new List<Button>());
                 var number = Cons.CHESS_BOARD_HEIGHT - i;
                 for (int j = 0; j <= Cons.CHESS_BOARD_WIDTH; j++)
                 {
@@ -101,7 +162,8 @@ namespace CHESSGAME.Controllers
                         Width = Cons.CHESS_WIDTH,
                         Height = Cons.CHESS_HEIGHT,
                         Location = new System.Drawing.Point(oldButton.Location.X + oldButton.Width, oldButton.Location.Y),
-                        BackgroundImageLayout = ImageLayout.Stretch
+                        BackgroundImageLayout = ImageLayout.Stretch,
+                        Tag = i.ToString()
                     };
                     if (oldButton.BackColor == Color.Silver)
                         btn.BackColor = Color.WhiteSmoke;
@@ -131,7 +193,9 @@ namespace CHESSGAME.Controllers
                         Bitmap img = (Bitmap)Properties.Resources.ResourceManager.GetObject(image);
                         square.Button.BackgroundImage = img;
                         square.Button.BackgroundImageLayout = ImageLayout.Stretch;
-                        //square.Button.Text = square.Piece.Name + square.Piece.Side;
+                        String move = square.Location.Row.ToString() + square.Location.Col;
+                        String name = square.Piece.Side + "_" + square.Piece.Name;
+                        SaveMove(name, move);
                     }
                     if (square.Location.Row == 8 && (square.Location.Col == Chars.B || square.Location.Col == Chars.G))
                     {
@@ -144,7 +208,9 @@ namespace CHESSGAME.Controllers
                         Bitmap img = (Bitmap)Properties.Resources.ResourceManager.GetObject(image);
                         square.Button.BackgroundImage = img;
                         square.Button.BackgroundImageLayout = ImageLayout.Stretch;
-                        //square.Button.Text = square.Piece.Name + square.Piece.Side;
+                        String move = square.Location.Row.ToString() + square.Location.Col;
+                        String name = square.Piece.Side + "_" + square.Piece.Name;
+                        SaveMove(name, move);
                     }
                     if (square.Location.Row == 8 && (square.Location.Col == Chars.C || square.Location.Col == Chars.F))
                     {
@@ -157,7 +223,9 @@ namespace CHESSGAME.Controllers
                         Bitmap img = (Bitmap)Properties.Resources.ResourceManager.GetObject(image);
                         square.Button.BackgroundImage = img;
                         square.Button.BackgroundImageLayout = ImageLayout.Stretch;
-                        //square.Button.Text = square.Piece.Name + square.Piece.Side;
+                        String move = square.Location.Row.ToString() + square.Location.Col;
+                        String name = square.Piece.Side + "_" + square.Piece.Name;
+                        SaveMove(name, move);
                     }
                     if (square.Location.Row == 8 && square.Location.Col == Chars.D)
                     {
@@ -170,7 +238,9 @@ namespace CHESSGAME.Controllers
                         Bitmap img = (Bitmap)Properties.Resources.ResourceManager.GetObject(image);
                         square.Button.BackgroundImage = img;
                         square.Button.BackgroundImageLayout = ImageLayout.Stretch;
-                        //square.Button.Text = square.Piece.Name + square.Piece.Side;
+                        String move = square.Location.Row.ToString() + square.Location.Col;
+                        String name = square.Piece.Side + "_" + square.Piece.Name;
+                        SaveMove(name, move);
                     }
                     if (square.Location.Row == 8 && square.Location.Col == Chars.E)
                     {
@@ -183,7 +253,9 @@ namespace CHESSGAME.Controllers
                         Bitmap img = (Bitmap)Properties.Resources.ResourceManager.GetObject(image);
                         square.Button.BackgroundImage = img;
                         square.Button.BackgroundImageLayout = ImageLayout.Stretch;
-                        //square.Button.Text = square.Piece.Name + square.Piece.Side;
+                        String move = square.Location.Row.ToString() + square.Location.Col;
+                        String name = square.Piece.Side + "_" + square.Piece.Name;
+                        SaveMove(name, move);
                     }
                     if (square.Location.Row == 7)
                     {
@@ -196,7 +268,9 @@ namespace CHESSGAME.Controllers
                         Bitmap img = (Bitmap)Properties.Resources.ResourceManager.GetObject(image);
                         square.Button.BackgroundImage = img;
                         square.Button.BackgroundImageLayout = ImageLayout.Stretch;
-                        //square.Button.Text = square.Piece.Name + square.Piece.Side;
+                        String move = square.Location.Row.ToString() + square.Location.Col;
+                        String name = square.Piece.Side + "_" + square.Piece.Name;
+                        SaveMove(name, move);
                     }
                     if (square.Location.Row == 1 && (square.Location.Col == Chars.A || square.Location.Col == Chars.H))
                     {
@@ -209,7 +283,9 @@ namespace CHESSGAME.Controllers
                         Bitmap img = (Bitmap)Properties.Resources.ResourceManager.GetObject(image);
                         square.Button.BackgroundImage = img;
                         square.Button.BackgroundImageLayout = ImageLayout.Stretch;
-                        //square.Button.Text = square.Piece.Name + square.Piece.Side;
+                        String move = square.Location.Row.ToString() + square.Location.Col;
+                        String name = square.Piece.Side + "_" + square.Piece.Name;
+                        SaveMove(name, move);
                     }
                     if (square.Location.Row == 1 && (square.Location.Col == Chars.B || square.Location.Col == Chars.G))
                     {
@@ -222,7 +298,9 @@ namespace CHESSGAME.Controllers
                         Bitmap img = (Bitmap)Properties.Resources.ResourceManager.GetObject(image);
                         square.Button.BackgroundImage = img;
                         square.Button.BackgroundImageLayout = ImageLayout.Stretch;
-                        //square.Button.Text = square.Piece.Name + square.Piece.Side;
+                        String move = square.Location.Row.ToString() + square.Location.Col;
+                        String name = square.Piece.Side + "_" + square.Piece.Name;
+                        SaveMove(name, move);
                     }
                     if (square.Location.Row == 1 && (square.Location.Col == Chars.C || square.Location.Col == Chars.F))
                     {
@@ -235,7 +313,9 @@ namespace CHESSGAME.Controllers
                         Bitmap img = (Bitmap)Properties.Resources.ResourceManager.GetObject(image);
                         square.Button.BackgroundImage = img;
                         square.Button.BackgroundImageLayout = ImageLayout.Stretch;
-                        //square.Button.Text = square.Piece.Name + square.Piece.Side;
+                        String move = square.Location.Row.ToString() + square.Location.Col;
+                        String name = square.Piece.Side + "_" + square.Piece.Name;
+                        SaveMove(name, move);
                     }
                     if (square.Location.Row == 1 && square.Location.Col == Chars.D)
                     {
@@ -248,7 +328,9 @@ namespace CHESSGAME.Controllers
                         Bitmap img = (Bitmap)Properties.Resources.ResourceManager.GetObject(image);
                         square.Button.BackgroundImage = img;
                         square.Button.BackgroundImageLayout = ImageLayout.Stretch;
-                        //square.Button.Text = square.Piece.Name + square.Piece.Side;
+                        String move = square.Location.Row.ToString() + square.Location.Col;
+                        String name = square.Piece.Side + "_" + square.Piece.Name;
+                        SaveMove(name, move);
                     }
                     if (square.Location.Row == 1 && square.Location.Col == Chars.E)
                     {
@@ -261,7 +343,9 @@ namespace CHESSGAME.Controllers
                         Bitmap img = (Bitmap)Properties.Resources.ResourceManager.GetObject(image);
                         square.Button.BackgroundImage = img;
                         square.Button.BackgroundImageLayout = ImageLayout.Stretch;
-                        //square.Button.Text = square.Piece.Name + square.Piece.Side;
+                        String move = square.Location.Row.ToString() + square.Location.Col;
+                        String name = square.Piece.Side + "_" + square.Piece.Name;
+                        SaveMove(name, move);
                     }
                     if (square.Location.Row == 2)
                     {
@@ -274,10 +358,13 @@ namespace CHESSGAME.Controllers
                         Bitmap img = (Bitmap)Properties.Resources.ResourceManager.GetObject(image);
                         square.Button.BackgroundImage = img;
                         square.Button.BackgroundImageLayout = ImageLayout.Stretch;
-                        //square.Button.Text = square.Piece.Name + square.Piece.Side;
+                        String move = square.Location.Row.ToString() + square.Location.Col;
+                        String name = square.Piece.Side + "_" + square.Piece.Name;
+                        SaveMove(name, move);
                     }
                     // Add Button
                     ChessBoard.Controls.Add(btn);
+                    Matrix[i].Add(btn);
                     // Add Square
                     squares.Add(square);
                     oldButton = btn;
@@ -293,9 +380,20 @@ namespace CHESSGAME.Controllers
         }
         Piece currentPiece;
         List<Square> legalSquares = new List<Square>();
+        Boolean flag = false;
+        //Piece previousPiece;
         void btn_Click(object sender, EventArgs e)
         {
             Button btn = sender as Button;
+            if (!flag && !isReady())
+            {
+                return;
+            }
+            else 
+            {
+                flag = true;
+            }
+            
             // Disable Board
             //squares.ForEach(s => s.Disable());
             //Disable Board
@@ -309,8 +407,6 @@ namespace CHESSGAME.Controllers
                     return;
                 }
             }
-            
-
             //Return when a piece is being chosen
             if ((isChoosePiece && currentSquare.Piece != currentPiece && !legalSquares.Contains(currentSquare)))
             {
@@ -325,7 +421,21 @@ namespace CHESSGAME.Controllers
             bool isUpdate = false;
             if (legalSquares.Contains(currentSquare))
             {
+                PlayTimeLine.Push(new PlayInfo(GetChessPoint(btn),CurrentPlayer));
+                Mark(btn);
+                ChangePlayer();
+
+                if (playerPieceMarked != null)
+                    playerPieceMarked(this, new ButtonPieceClickEvent(GetChessPoint(btn), GetChessPoint(currentPiece.Square.Button)));
                 currentPiece.UpdateLocation(currentSquare);
+                string move = currentSquare.Location.Row.ToString() + currentSquare.Location.Col;
+                string name = currentPiece.Side + "_" + currentPiece.Name;
+                SaveMove(name, move);
+                //MessageBox.Show($"Move cần tìm là {move}");
+                //MessageBox.Show($"currentSquare.Piece.Name là {currentSquare.Piece.Name}");
+                ////string previousPiece = FindLocationPreviousPiece(move);
+                //MessageBox.Show($"con cờ bị ăn là {previousPiece}");
+                //EndGame(previousPiece);
                 ChangePlayer();
                 squares.ForEach(s => s.ResetColor());
                 legalSquares.Clear();
@@ -338,12 +448,12 @@ namespace CHESSGAME.Controllers
             // Get all Legal Location
             var locations = currentSquare.Piece.GetLegalLocations(currentSquare);
             // Each Legal Location change that Square's BackColor to Red
+            //int temp = 1;
             locations.ForEach(l =>
             {
-                var legalSquare = squares.Find(sq => sq.Location.Row == l.Row 
-                && sq.Location.Col == l.Col 
+                var legalSquare = squares.Find(sq => sq.Location.Row == l.Row
+                && sq.Location.Col == l.Col
                 && (sq.Piece == null || sq.Piece.Side != currentSquare.Piece.Side));
-                //MessageBox.Show($"|{legalSquare}|");
                 if (legalSquare != null)
                 {
                     if (btn.FlatAppearance.BorderColor == Color.Red || isUpdate)
@@ -359,6 +469,31 @@ namespace CHESSGAME.Controllers
                     }
                 }
             });
+            //chốt ăn chéo
+            /*if (currentPiece.Name == "P_Pawn")
+            {
+                locations.ForEach(l =>
+                {
+                    var legalSquare = squares.Find(sq => sq.Location.Row == l.Row
+                    && sq.Location.Col == l.Col - 1 || (sq.Location.Row == l.Row
+                    && sq.Location.Col == l.Col + 1));
+                    if (legalSquare != null)
+                    {
+                        if (btn.FlatAppearance.BorderColor == Color.Red || isUpdate)
+                        {
+                            legalSquare.ResetColor();
+                            isChoosePiece = false;
+                            legalSquares.Remove(legalSquare);
+                        }
+                        else
+                        {
+                            legalSquare.Button.BackColor = Color.Red;
+                            legalSquares.Add(legalSquare);
+                        }
+                    }
+                });
+            }*/
+            
             if (currentSquare.IsClick && !isUpdate)
             {
                 currentSquare.UnSelect();
@@ -388,6 +523,125 @@ namespace CHESSGAME.Controllers
             }
 
         }
+        void Mark(Button btn)
+        {
+            currentPlayer = currentPlayer == Side.Pink ? Side.Black : Side.Pink;
+        }
+        public void OtherPlayerMark(Point point, Point startPoint)
+        {
+            Button btn = Matrix[point.Y][point.X];
+            Square foundSquare = squares.Find(s => s.Button.Equals(btn));
+            if (foundSquare == null)
+            {
+                // In loi
+            }
+            Button startBtn = Matrix[startPoint.Y][startPoint.X];
+
+            Square foundStartSquare = squares.Find(s => s.Button.Equals(startBtn));
+            if (foundSquare == null)
+            {
+                // In loi
+            }
+            foundStartSquare.Piece.UpdateLocation(foundSquare);
+            PlayTimeLine.Push(new PlayInfo(GetChessPoint(btn), currentPlayer));
+            currentPlayer = currentPlayer == Side.Pink ? Side.Black : Side.Pink;
+            ChangePlayer();
+        }
+        private Point GetChessPoint(Button btn)
+        {
+            int vertical = Convert.ToInt32(btn.Tag);
+            int horizontal = Matrix[vertical].IndexOf(btn);
+            Point point = new Point(horizontal, vertical);
+            return point;
+        }
+        public class ButtonClickEvent : EventArgs
+        {
+            private Point clickedPoint;
+
+            public Point ClickedPoint
+            {
+                get { return clickedPoint; }
+                set { clickedPoint = value; }
+            }
+
+            public ButtonClickEvent(Point point)
+            {
+                this.ClickedPoint = point;
+            }
+        }
+        public class ButtonPieceClickEvent : EventArgs
+        {
+            private Point clickedPoint;
+
+            public Point ClickedPoint
+            {
+                get { return clickedPoint; }
+                set { clickedPoint = value; }
+            }
+
+            public Point StartPoint { get; }
+
+            public ButtonPieceClickEvent(Point point, Point startPoint)
+            {
+                this.ClickedPoint = point;
+                StartPoint = startPoint;
+            }
+        }
+        public bool isReady()
+        {
+            if (MessageBox.Show("When you choose OK, time will start! Are you ready?", "Notification", MessageBoxButtons.OKCancel) == System.Windows.Forms.DialogResult.OK)
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+        public int index;
+        void SaveMove(String name, String move)
+        {
+            index = dgvListMove.Rows.Add();
+            dgvListMove.Rows[index].Cells[0].Value = index + 1;
+            dgvListMove.Rows[index].Cells[1].Value = name.ToString();
+            dgvListMove.Rows[index].Cells[2].Value = move.ToString();
+        }
+        private void EndGame(String name)
+        {
+            if (name == "Pink_King")
+            {
+                if(currentPlayer == Side.Black)
+                    MessageBox.Show("BLACK WIN");
+                else
+                    MessageBox.Show("PINK WIN");
+            }
+            else
+                return;
+        }
+        //private string FindLocationPreviousPiece(string location)
+        //{
+        //    string name = "";
+        //    int i =  index-1;
+        //    int a = 0;
+        //    Boolean flag = false;
+        //    while (i >= 0)
+        //    {
+        //        if (dgvListMove.Rows[i].Cells[2].Value.ToString() == location)
+        //        {
+        //            a++;
+        //            //MessageBox.Show($"Đang chạy tới: {dgvListMove.Rows[i].Cells[1].Value.ToString()}_{dgvListMove.Rows[i].Cells[2].Value.ToString()}");
+        //            //MessageBox.Show($"i = {i}");
+        //            //MessageBox.Show($"index = {index}");
+        //            if (a == 2)
+        //            {
+        //                name = dgvListMove.Rows[i].Cells[1].Value.ToString();
+        //                //MessageBox.Show("Đã tìm đc");
+        //                return name;
+        //            }       
+        //        }
+        //        i--;    
+        //    }
+        //    return name;
+        //}
+
         #endregion
     }
 }

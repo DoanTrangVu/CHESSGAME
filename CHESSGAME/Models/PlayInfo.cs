@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CHESSGAME.Models
 {
-    public class Player
+    public class PlayInfo
     {
         private String name;
         public String Name
@@ -21,15 +21,18 @@ namespace CHESSGAME.Models
             get { return side; }
             set { side = value; }
         }
-        //public Image Mark
-        //{
-        //    get { return mark; }
-        //    set { mark = value; }
-        //}
-        public Player(String name, Side side)
+        public PlayInfo(Point point, Side side)
         {
-            this.Name = name;
+            this.Point = point;
             this.Side = side;
+            
+        }
+        private Point point;
+
+        public Point Point
+        {
+            get { return point; }
+            set { point = value; }
         }
     }
 }
